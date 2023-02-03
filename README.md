@@ -1,2 +1,5 @@
-# pretty cool honestly
-## yeah id say this is silly
+# Well this is cool!
+## Yeah, I would say that this is neat.
+### Does the text keep getting smaller?
+#### And smaller?
+##### I'm not sure.
