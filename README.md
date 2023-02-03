@@ -3,6 +3,6 @@
 ### Does the text keep getting smaller?
 #### And smaller?
 ##### I'm not sure.
-###### I think it does.
-####### Teeny tiny text.
-######## :)
+###### Okay I figured out that this is the smallest it gets with hashtags. Cool.
+
+###### :)
