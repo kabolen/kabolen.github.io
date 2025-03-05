@@ -107,8 +107,10 @@ class _MyAppState extends State<MyApp> {
     try {
       final fetchedProducts = await SquareAPI()
           .fetchOnlineAvailabeAndRelated(); // Fetch products from API
+          print(fetchedProducts);
       setState(() {
         products = fetchedProducts; // Set products
+        
       });
     } catch (e) {
       setState(() {

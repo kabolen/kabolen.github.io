@@ -41,6 +41,7 @@ class Item {
 
   factory Item.fromJson(
       Map<String, dynamic> json, Map<String, Map<String, dynamic>> lookup) {
+    print(json['item_data']['name']);
     // resolve categories
     final categoriesJson =
         json['item_data']['categories'] as List<dynamic>? ?? [];
@@ -56,6 +57,7 @@ class Item {
         })
         .whereType<Category>()
         .toList();
+    print(categories);
     // resolve modifier lists
     final modifierListsJson =
         json['item_data']['modifier_list_info'] as List<dynamic>? ?? [];
@@ -71,6 +73,7 @@ class Item {
         })
         .whereType<ModifierList>()
         .toList();
+    print(modifierLists);
     // resolve item options
     final optionsJson =
         json['item_data']['item_options'] as List<dynamic>? ?? [];
@@ -84,14 +87,26 @@ class Item {
         })
         .whereType<ItemOption>()
         .toList();
+    print(itemOptions);
     final Map<String, ItemOption> itemOptionsMap = {
       for (var itemOption in itemOptions) itemOption.id: itemOption,
     };
     // resolve item variations
-    final variationsJson = json['item_data']['variations'] as List<dynamic>;
-    final itemVariations = variationsJson.map<ItemVariation>((variationJson) {
-      return ItemVariation.fromJson(variationJson, itemOptionsMap);
-    }).toList();
+    final variationsJson =
+        json['item_data']['variations'] as List<dynamic>? ?? [];
+    final itemVariations = variationsJson
+        .map<ItemVariation?>((variationJson) {
+          try {
+            return ItemVariation.fromJson(variationJson, itemOptionsMap);
+          } catch (e, stacktrace) {
+            print('Failed to parse variation: $e');
+            print(stacktrace);
+            return null; // Skip this variation
+          }
+        })
+        .whereType<ItemVariation>()
+        .toList();
+    print(itemVariations);
     // resolve image
     final imageId = json['item_data']['image_ids']?.first;
     final itemImage = imageId != null
@@ -100,10 +115,11 @@ class Item {
             id: 'None',
             url:
                 'https://items-images-production.s3.us-west-2.amazonaws.com/files/5453a9c49c551df8930415d2de8e61a2c7fcd555/original.png');
+    print(itemImage);
     return Item(
       id: json['id'],
       name: json['item_data']['name'],
-      description: json['item_data']['description'],
+      description: json['item_data']['description'] ?? '',
       categories: categories,
       modifierLists: modifierLists,
       itemVariations: itemVariations,
@@ -147,22 +163,25 @@ class ItemVariation {
     Map<String, dynamic> json,
     Map<String, ItemOption> itemOptionsMap,
   ) {
-    final List<ItemOptionVal> resolvedOptions =
-        (json['item_variation_data']['item_option_values'] as List<dynamic>)
-            .map((optionValueJson) {
-      final optionId = optionValueJson['item_option_id'];
-      final valueId = optionValueJson['item_option_value_id'];
-      final itemOption = itemOptionsMap[optionId];
-      final itemOptionValue = itemOption?.itemOptionVals.firstWhere(
-        (value) => value.id == valueId,
-        orElse: () => throw Exception("Option Value not found"),
-      );
-      return ItemOptionVal(
-        id: itemOptionValue!.id,
-        itemOptionId: itemOptionValue.itemOptionId,
-        name: itemOptionValue.name,
-      );
-    }).toList();
+    final optionValuesJson =
+        json['item_variation_data']['item_option_values'] as List<dynamic>?;
+
+    final List<ItemOptionVal> resolvedOptions = optionValuesJson != null
+        ? optionValuesJson.map((optionValueJson) {
+            final optionId = optionValueJson['item_option_id'];
+            final valueId = optionValueJson['item_option_value_id'];
+            final itemOption = itemOptionsMap[optionId];
+            final itemOptionValue = itemOption?.itemOptionVals.firstWhere(
+              (value) => value.id == valueId,
+              orElse: () => throw Exception("Option Value not found"),
+            );
+            return ItemOptionVal(
+              id: itemOptionValue!.id,
+              itemOptionId: itemOptionValue.itemOptionId,
+              name: itemOptionValue.name,
+            );
+          }).toList()
+        : [];
 
     return ItemVariation(
       id: json['id'],
