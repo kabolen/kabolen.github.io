@@ -414,7 +414,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    mainAxisExtent: 300,
+                    mainAxisExtent: 260,
                   ),
                   itemCount: widget.products
                       .where((product) => product.categories

@@ -212,7 +212,7 @@ class _MenuPageState extends State<MenuPage> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  mainAxisExtent: 300,
+                  mainAxisExtent: 260,
                 ),
                 itemCount: filteredProducts.length,
                 shrinkWrap: true,
