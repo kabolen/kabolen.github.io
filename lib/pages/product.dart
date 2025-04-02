@@ -10,6 +10,7 @@
  ****************************************************************************************************/
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'cart.dart';
 import '../utility/squareAPI.dart';
@@ -158,281 +159,273 @@ class _ProductPageState extends State<ProductPage> {
     List<String> modifierIds = getSelectedModifierIds();
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            item.name,
-            style: GoogleFonts.poppins(
-              color: const Color.fromARGB(255, 255, 153, 7),
-              fontSize: 16,
-              fontWeight: FontWeight.w900,
-            ),
+      appBar: AppBar(
+        title: Text(
+          item.name,
+          style: GoogleFonts.poppins(
+            color: const Color.fromARGB(255, 255, 153, 7),
+            fontSize: 16,
+            fontWeight: FontWeight.w900,
           ),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.all(16.0),
-                children: [
-                  if (item.itemImage != null)
-                    Image.network(
-                      item.itemImage!.url,
-                      width: 300,
-                      height: 300,
-                      fit: BoxFit.cover,
-                    ),
-                  const SizedBox(height: 16),
-                  Wrap(
-                    spacing: 8.0,
-                    runSpacing: 8.0,
-                    children: item.categories
-                        .map((category) => Chip(label: Text(category.name)))
-                        .toList(),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(16.0),
+              children: [
+                if (item.itemImage != null)
+                  Image.network(
+                    item.itemImage!.url,
+                    width: 300,
+                    height: 300,
+                    fit: BoxFit.cover,
                   ),
-                  const SizedBox(height: 16),
+                const SizedBox(height: 16),
+                Wrap(
+                  spacing: 8.0,
+                  runSpacing: 8.0,
+                  children: item.categories
+                      .map((category) => Chip(label: Text(category.name)))
+                      .toList(),
+                ),
+                const SizedBox(height: 16),
 
-                  if (item.description != null)
-                    Text(
-                      item.description!,
-                      style: GoogleFonts.poppins(
-                          fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                  const SizedBox(height: 24),
-
+                if (item.description != null)
                   Text(
-                    "Customize",
+                    item.description!,
                     style: GoogleFonts.poppins(
-                      color: const Color.fromARGB(255, 255, 153, 7),
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                    ),
+                        fontSize: 14, fontWeight: FontWeight.w500),
                   ),
+                const SizedBox(height: 24),
 
-                  const SizedBox(height: 24),
-                  Text(
-                    "Select Options",
-                    style: GoogleFonts.poppins(
-                      color: const Color.fromARGB(255, 255, 153, 7),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    ),
+                Text(
+                  "Customize",
+                  style: GoogleFonts.poppins(
+                    color: const Color.fromARGB(255, 255, 153, 7),
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
                   ),
+                ),
 
-                  // dynamically display options
-                  ...item.itemOptions.map((option) {
-                    final options = validValues[option.id] ?? [];
-                    // check selected value is valid
-                    if (selectedOptions[option.id] != null) {
-                      assert(
-                        options.any((optionVal) =>
-                            optionVal.id == selectedOptions[option.id]),
-                        'Selected value ${selectedOptions[option.id]} does not match any valid options for ${option.id}',
-                      );
-                    }
-
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 8),
-                        DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            labelText: option.name,
-                            border: const OutlineInputBorder(),
-                          ),
-                          value: selectedOptions[option.id],
-                          items: options
-                              .map((optionVal) => DropdownMenuItem(
-                                    value: optionVal.id,
-                                    child: Text(optionVal.name),
-                                  ))
-                              .toList(),
-                          onChanged: (value) =>
-                              _onOptionSelected(option.id, value),
-                        ),
-                      ],
-                    );
-                  }),
-                  if (item.modifierLists.isNotEmpty)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 16),
-                        Text(
-                          "Modify",
-                          style: GoogleFonts.poppins(
-                            color: const Color.fromARGB(255, 255, 153, 7),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        ...item.modifierLists.map((modifierList) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 8),
-                              if (modifierList.selectionType == 'SINGLE') ...[
-                                DropdownButtonFormField<String>(
-                                  decoration: InputDecoration(
-                                    labelText: modifierList.name,
-                                    border: const OutlineInputBorder(),
-                                  ),
-                                  value:
-                                      selectedSingleModifiers[modifierList.id],
-                                  onChanged: (selectedValue) {
-                                    setState(() {
-                                      selectedSingleModifiers[modifierList.id] =
-                                          selectedValue!;
-                                    });
-                                  },
-                                  items: modifierList.modifiers.map((modifier) {
-                                    return DropdownMenuItem<String>(
-                                      value: modifier.id,
-                                      child: Text(
-                                          '${modifier.name} (\$${(modifier.price / 100).toStringAsFixed(2)})'),
-                                    );
-                                  }).toList(),
-                                ),
-                              ],
-                              if (modifierList.selectionType == 'MULTIPLE') ...[
-                                DropdownButtonFormField<String>(
-                                  decoration: InputDecoration(
-                                    labelText: modifierList.name,
-                                    border: const OutlineInputBorder(),
-                                  ),
-                                  onChanged: (selectedValue) {
-                                    setState(() {
-                                      if (selectedMultipleModifiers[
-                                              modifierList.id] ==
-                                          null) {
-                                        selectedMultipleModifiers[
-                                            modifierList.id] = [];
-                                      }
-
-                                      if (!(selectedMultipleModifiers[
-                                                  modifierList.id]
-                                              ?.contains(selectedValue) ??
-                                          false)) {
-                                        selectedMultipleModifiers[
-                                                modifierList.id]
-                                            ?.add(selectedValue!);
-                                      }
-                                    });
-                                  },
-                                  items: modifierList.modifiers.map((modifier) {
-                                    return DropdownMenuItem<String>(
-                                      value: modifier.id,
-                                      child: Text(
-                                          '${modifier.name} (\$${(modifier.price / 100).toStringAsFixed(2)})'),
-                                    );
-                                  }).toList(),
-                                ),
-                                if (selectedMultipleModifiers[
-                                        modifierList.id] !=
-                                    null)
-                                  Wrap(
-                                    spacing: 8,
-                                    children: selectedMultipleModifiers[
-                                            modifierList.id]!
-                                        .map((selectedId) {
-                                      final selectedModifier = modifierList
-                                          .modifiers
-                                          .firstWhere((modifier) =>
-                                              modifier.id == selectedId);
-                                      return Chip(
-                                        label: Text(
-                                            '${selectedModifier.name} (\$${(selectedModifier.price / 100).toStringAsFixed(2)})'),
-                                        deleteIcon: const Icon(Icons.cancel),
-                                        onDeleted: () {
-                                          setState(() {
-                                            selectedMultipleModifiers[
-                                                    modifierList.id]
-                                                ?.remove(selectedId);
-                                          });
-                                        },
-                                      );
-                                    }).toList(),
-                                  ),
-                              ],
-                            ],
-                          );
-                        }),
-                        const SizedBox(height: 16),
-                      ],
-                    ),
-                ],
-              ),
-            ),
-            FutureBuilder<double>(
-              future: SquareAPI().fetchItemPrice(
-                  variationId: variationId, modifierIds: modifierIds),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else if (snapshot.hasData) {
-                  double totalAmount = snapshot.data!;
-                  return Text(
-                    'Total: \$${totalAmount.toStringAsFixed(2)}',
-                    style: GoogleFonts.poppins(
-                      color: const Color.fromARGB(255, 255, 153, 7),
-                      fontSize: 24,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  );
-                } else {
-                  return const Text('No data available');
-                }
-              },
-            ),
-            Container(
-              width: double.infinity,
-              padding:
-                  const EdgeInsets.only(right: 16.0, left: 16.0, bottom: 16.0),
-              child: ElevatedButton(
-                onPressed: () async {
-                  final variationIdAdd = findMatchingVariationId();
-                  final modifierIdsAdd = getSelectedModifierIds();
-                  double itemTotal = await SquareAPI().fetchItemPrice(
-                      variationId: variationId, modifierIds: modifierIds);
-
-                  if (variationIdAdd != null) {
-                    final cartItem = CartItem(
-                      variationId: variationIdAdd,
-                      modifierIds: modifierIdsAdd,
-                      product: widget.product,
-                      itemTotal: itemTotal,
-                    );
-
-                    setState(() {
-                      widget.cart.add(cartItem);
-                    });
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                          content:
-                              Text('${widget.product.name} added to cart!')),
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          content: Text('Please select a valid variation!')),
-                    );
-                  }
-                },
-                child: Text(
-                  'ADD TO CART',
+                const SizedBox(height: 24),
+                Text(
+                  "Select Options",
                   style: GoogleFonts.poppins(
                     color: const Color.fromARGB(255, 255, 153, 7),
                     fontSize: 16,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-              ),
+
+                // dynamically display options
+                ...item.itemOptions.map((option) {
+                  final options = validValues[option.id] ?? [];
+                  // check selected value is valid
+                  if (selectedOptions[option.id] != null) {
+                    assert(
+                      options.any((optionVal) =>
+                          optionVal.id == selectedOptions[option.id]),
+                      'Selected value ${selectedOptions[option.id]} does not match any valid options for ${option.id}',
+                    );
+                  }
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 8),
+                      DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          labelText: option.name,
+                          border: const OutlineInputBorder(),
+                        ),
+                        value: selectedOptions[option.id],
+                        items: options
+                            .map((optionVal) => DropdownMenuItem(
+                                  value: optionVal.id,
+                                  child: Text(optionVal.name),
+                                ))
+                            .toList(),
+                        onChanged: (value) =>
+                            _onOptionSelected(option.id, value),
+                      ),
+                    ],
+                  );
+                }),
+                if (item.modifierLists.isNotEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 16),
+                      Text(
+                        "Modify",
+                        style: GoogleFonts.poppins(
+                          color: const Color.fromARGB(255, 255, 153, 7),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      ...item.modifierLists.map((modifierList) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 8),
+                            if (modifierList.selectionType == 'SINGLE') ...[
+                              DropdownButtonFormField<String>(
+                                decoration: InputDecoration(
+                                  labelText: modifierList.name,
+                                  border: const OutlineInputBorder(),
+                                ),
+                                value: selectedSingleModifiers[modifierList.id],
+                                onChanged: (selectedValue) {
+                                  setState(() {
+                                    selectedSingleModifiers[modifierList.id] =
+                                        selectedValue!;
+                                  });
+                                },
+                                items: modifierList.modifiers.map((modifier) {
+                                  return DropdownMenuItem<String>(
+                                    value: modifier.id,
+                                    child: Text(
+                                        '${modifier.name} (\$${(modifier.price / 100).toStringAsFixed(2)})'),
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                            if (modifierList.selectionType == 'MULTIPLE') ...[
+                              DropdownButtonFormField<String>(
+                                decoration: InputDecoration(
+                                  labelText: modifierList.name,
+                                  border: const OutlineInputBorder(),
+                                ),
+                                onChanged: (selectedValue) {
+                                  setState(() {
+                                    if (selectedMultipleModifiers[
+                                            modifierList.id] ==
+                                        null) {
+                                      selectedMultipleModifiers[
+                                          modifierList.id] = [];
+                                    }
+
+                                    if (!(selectedMultipleModifiers[
+                                                modifierList.id]
+                                            ?.contains(selectedValue) ??
+                                        false)) {
+                                      selectedMultipleModifiers[modifierList.id]
+                                          ?.add(selectedValue!);
+                                    }
+                                  });
+                                },
+                                items: modifierList.modifiers.map((modifier) {
+                                  return DropdownMenuItem<String>(
+                                    value: modifier.id,
+                                    child: Text(
+                                        '${modifier.name} (\$${(modifier.price / 100).toStringAsFixed(2)})'),
+                                  );
+                                }).toList(),
+                              ),
+                              if (selectedMultipleModifiers[modifierList.id] !=
+                                  null)
+                                Wrap(
+                                  spacing: 8,
+                                  children: selectedMultipleModifiers[
+                                          modifierList.id]!
+                                      .map((selectedId) {
+                                    final selectedModifier = modifierList
+                                        .modifiers
+                                        .firstWhere((modifier) =>
+                                            modifier.id == selectedId);
+                                    return Chip(
+                                      label: Text(
+                                          '${selectedModifier.name} (\$${(selectedModifier.price / 100).toStringAsFixed(2)})'),
+                                      deleteIcon: const Icon(Icons.cancel),
+                                      onDeleted: () {
+                                        setState(() {
+                                          selectedMultipleModifiers[
+                                                  modifierList.id]
+                                              ?.remove(selectedId);
+                                        });
+                                      },
+                                    );
+                                  }).toList(),
+                                ),
+                            ],
+                          ],
+                        );
+                      }),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
+              ],
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+      floatingActionButton: FutureBuilder<double>(
+        future: SquareAPI()
+            .fetchItemPrice(variationId: variationId, modifierIds: modifierIds),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else if (snapshot.hasData) {
+            double totalAmount = snapshot.data!;
+            return FloatingActionButton.extended(
+              onPressed: () async {
+                final variationIdAdd = findMatchingVariationId();
+                final modifierIdsAdd = getSelectedModifierIds();
+
+                if (variationIdAdd != null) {
+                  final cartItem = CartItem(
+                    variationId: variationIdAdd,
+                    modifierIds: modifierIdsAdd,
+                    product: widget.product,
+                    itemTotal: totalAmount,
+                  );
+
+                  setState(() {
+                    widget.cart.add(cartItem);
+                  });
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                        content: Text('${widget.product.name} added to cart!')),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('Please select a valid variation!')),
+                  );
+                }
+              },
+              icon: SvgPicture.asset(
+                'assets/icons/cart.svg',
+                height: 24,
+                width: 24,
+                color: Colors.white,
+              ),
+              label: Text(
+                '\$${totalAmount.toStringAsFixed(2)}',
+                style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              backgroundColor: const Color.fromARGB(255, 255, 153, 7),
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(30), // Apply rounded corners
+              ),
+            );
+          } else {
+            return const Text('No price available');
+          }
+        },
+      ),
+    );
   }
 }

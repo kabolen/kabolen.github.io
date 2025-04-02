@@ -15,6 +15,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_app/pages/checkout.dart';
 import '../utility/squareAPI.dart';
 
+/****************************************************************************************************
+ *
+ * @file:    cart.dart
+ * @author:  Nolan Olhausen
+ * @date: 2024-11-15
+ *
+ * @brief:
+ *      Page for displaying the user's cart and allowing them to adjust the quantity of items
+ *      and add a tip. The user can also proceed to checkout from this page.
+ * 
+ ****************************************************************************************************/
+
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_app/pages/checkout.dart';
+import '../utility/squareAPI.dart';
+
 class CartItem {
   final String variationId;
   final List<String> modifierIds;
@@ -55,11 +72,19 @@ class _CartPageState extends State<CartPage> {
   String selectedTip = 'Custom'; // default to custom 0.00
   TextEditingController customTipController =
       TextEditingController(text: '0.00');
+  FocusNode customTipFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    // Call _calculateCartTotal when the page is first loaded
     _calculateCartTotal();
+  }
+
+  @override
+  void dispose() {
+    customTipFocusNode.dispose();
+    super.dispose();
   }
 
   // update tip variable
@@ -109,247 +134,269 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Cart',
-          style: GoogleFonts.poppins(
-            color: const Color.fromARGB(255, 255, 153, 7),
-            fontSize: 24,
-            fontWeight: FontWeight.w900,
+    return GestureDetector(
+      onTap: () {
+        // Dismiss the keyboard if tapping outside the TextField
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Cart',
+            style: GoogleFonts.poppins(
+              color: const Color.fromARGB(255, 255, 153, 7),
+              fontSize: 24,
+              fontWeight: FontWeight.w900,
+            ),
           ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: widget.products.length,
-                itemBuilder: (context, index) {
-                  final cartItem = widget.products[index];
-                  final variationName =
-                      _getVariationName(cartItem.product, cartItem.variationId);
-                  final modifierNames =
-                      _getModifierNames(cartItem.product, cartItem.modifierIds);
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: widget.products.length,
+                  itemBuilder: (context, index) {
+                    final cartItem = widget.products[index];
+                    final variationName = _getVariationName(
+                        cartItem.product, cartItem.variationId);
+                    final modifierNames = _getModifierNames(
+                        cartItem.product, cartItem.modifierIds);
 
-                  return Card(
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Image.network(
-                                cartItem.product.itemImage?.url ?? '',
-                                width: 60,
-                                height: 60,
-                                fit: BoxFit.cover,
-                              ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      cartItem.product.name,
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      variationName,
-                                      style: const TextStyle(
-                                          fontSize: 14, color: Colors.grey),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      modifierNames.isNotEmpty
-                                          ? modifierNames.join(', ')
-                                          : 'No Modifiers',
-                                      style: const TextStyle(
-                                          fontSize: 14, color: Colors.grey),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Row(
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 4,
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.network(
+                              cartItem.product.itemImage?.url ?? '',
+                              width: 80,
+                              height: 80,
+                              fit: BoxFit.cover,
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.remove),
-                                    onPressed: () {
-                                      setState(() {
-                                        if (cartItem.quantity > 1) {
-                                          cartItem.quantity--;
-                                        } else {
-                                          // remove the item from the cart if the quantity is 0
-                                          widget.products.removeAt(index);
-                                        }
-                                      });
-                                      _calculateCartTotal();
-                                    },
-                                  ),
                                   Text(
-                                    '${cartItem.quantity}',
-                                    style: const TextStyle(fontSize: 16),
+                                    cartItem.product.name,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                  IconButton(
-                                    icon: const Icon(Icons.add),
-                                    onPressed: () {
-                                      setState(() {
-                                        cartItem.quantity++;
-                                      });
-                                      _calculateCartTotal();
-                                    },
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    variationName,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    modifierNames.isNotEmpty
+                                        ? modifierNames.join(', ')
+                                        : 'No Modifiers',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            '\$${cartItem.itemTotal.toStringAsFixed(2)}',
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Add a Tip:',
-                    style: GoogleFonts.poppins(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Wrap(
-                    spacing: 8.0,
-                    children: ['10%', '15%', '20%', '25%', 'Custom'].map((tip) {
-                      return ChoiceChip(
-                        label: Text(tip),
-                        selected: selectedTip == tip,
-                        onSelected: (_) {
-                          if (tip == 'Custom') {
-                            _updateTipAmount('Custom');
-                          } else {
-                            _updateTipAmount(tip);
-                          }
-                        },
-                      );
-                    }).toList(),
-                  ),
-                  if (selectedTip == 'Custom')
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Custom Tip: \$',
-                            style: GoogleFonts.poppins(fontSize: 16),
-                          ),
-                          SizedBox(
-                            width: 80,
-                            child: TextField(
-                              controller: customTipController,
-                              keyboardType:
-                                  const TextInputType.numberWithOptions(
-                                      decimal: true),
-                              onChanged: (value) {
-                                setState(() {
-                                  tipAmount = double.tryParse(value) ?? 0.0;
-                                });
-                              },
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '# of Items: ${widget.products.fold(0, (sum, item) => sum + item.quantity)}',
-                    style: GoogleFonts.poppins(
-                      color: const Color.fromARGB(255, 255, 153, 7),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Text(
-                    'Tip: \$${tipAmount.toStringAsFixed(2)}',
-                    style: GoogleFonts.poppins(
-                      color: const Color.fromARGB(255, 255, 153, 7),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Text(
-                    'Tax: \$${taxAmount.toStringAsFixed(2)}',
-                    style: GoogleFonts.poppins(
-                      color: const Color.fromARGB(255, 255, 153, 7),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Text(
-                    'Total: \$${(totalAmount + tipAmount).toStringAsFixed(2)}',
-                    style: GoogleFonts.poppins(
-                      color: const Color.fromARGB(255, 255, 153, 7),
-                      fontSize: 24,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: ElevatedButton(
-                onPressed: widget.products.isNotEmpty
-                    ? () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CheckoutPage(
-                              account: widget.account,
-                              cart: widget.products,
-                              orderAmount: totalAmount,
-                              tipAmount: tipAmount,
-                              applePayEnabled: widget.applePayEnabled,
-                              googlePayEnabled: widget.googlePayEnabled,
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.remove),
+                                      onPressed: () {
+                                        setState(() {
+                                          if (cartItem.quantity > 1) {
+                                            cartItem.quantity--;
+                                          } else {
+                                            widget.products.removeAt(index);
+                                          }
+                                        });
+                                        _calculateCartTotal();
+                                      },
+                                    ),
+                                    Text(
+                                      '${cartItem.quantity}',
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.add),
+                                      onPressed: () {
+                                        setState(() {
+                                          cartItem.quantity++;
+                                        });
+                                        _calculateCartTotal();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  '\$${cartItem.itemTotal.toStringAsFixed(2)}',
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              ],
                             ),
-                          ),
-                        );
-                      }
-                    : null, // Disable button if cart is empty
-                child: Text(
-                  'CHECKOUT',
-                  style: GoogleFonts.poppins(
-                    color: const Color.fromARGB(255, 255, 153, 7),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w900,
-                  ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
-            ),
-          ],
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Add a Tip:',
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Wrap(
+                      spacing: 8.0,
+                      children:
+                          ['10%', '15%', '20%', '25%', 'Custom'].map((tip) {
+                        return ChoiceChip(
+                          label: Text(tip),
+                          selected: selectedTip == tip,
+                          onSelected: (_) {
+                            if (tip == 'Custom') {
+                              _updateTipAmount('Custom');
+                            } else {
+                              _updateTipAmount(tip);
+                            }
+                          },
+                        );
+                      }).toList(),
+                    ),
+                    if (selectedTip == 'Custom')
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Custom Tip .... \$',
+                              style: GoogleFonts.poppins(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 80,
+                              child: TextField(
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                controller: customTipController,
+                                focusNode: customTipFocusNode,
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                        decimal: true),
+                                textInputAction: TextInputAction.done,
+                                onSubmitted: (_) {
+                                  // Dismiss the keyboard when done
+                                  FocusScope.of(context)
+                                      .requestFocus(FocusNode());
+                                },
+                                onChanged: (value) {
+                                  setState(() {
+                                    tipAmount = double.tryParse(value) ?? 0.0;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Items .... ${widget.products.fold(0, (sum, item) => sum + item.quantity)}',
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      'Tip ......... \$${tipAmount.toStringAsFixed(2)}',
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      'Tax ........ \$${taxAmount.toStringAsFixed(2)}',
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SizedBox(height: 25),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
+        floatingActionButton: widget.products.isNotEmpty
+            ? Container(
+                width: 200, // Set the width for the oval shape
+                height:
+                    60, // Set the height to match the width for the oval shape
+                child: FloatingActionButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CheckoutPage(
+                          account: widget.account,
+                          cart: widget.products,
+                          orderAmount: totalAmount,
+                          tipAmount: tipAmount,
+                          applePayEnabled: widget.applePayEnabled,
+                          googlePayEnabled: widget.googlePayEnabled,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'Checkout  \$${(totalAmount + tipAmount).toStringAsFixed(2)}',
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  backgroundColor: const Color.fromARGB(255, 255, 153, 7),
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(30), // Apply rounded corners
+                  ),
+                ),
+              )
+            : null,
       ),
     );
   }
