@@ -412,9 +412,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.all(0),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    mainAxisExtent: 260,
+                    crossAxisSpacing: 0,
+                    mainAxisSpacing: 0,
+                    mainAxisExtent: 220,
                   ),
                   itemCount: widget.products
                       .where((product) => product.categories

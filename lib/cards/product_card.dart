@@ -43,7 +43,7 @@ class ProductCard extends StatelessWidget {
         );
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -51,13 +51,13 @@ class ProductCard extends StatelessWidget {
               child: Image.network(
                 product.itemImage!.url,
                 fit: BoxFit.cover,
-                width: 175,
-                height: 175,
+                width: 150,
+                height: 150,
               ),
             ),
             const SizedBox(height: 8),
             SizedBox(
-              width: 175,
+              width: 150,
               child: Text(
                 product.name,
                 maxLines: 2,
