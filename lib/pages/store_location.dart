@@ -61,22 +61,28 @@ class LocationPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8.0),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.5,
-              child: GoogleMap(
-                initialCameraPosition: CameraPosition(
-                  target: storeLocation,
-                  zoom: 17.0,
-                ),
-                markers: {
-                  Marker(
-                    markerId: const MarkerId('storeMarker'),
-                    position: storeLocation,
-                    infoWindow: const InfoWindow(
-                      title: 'Eagles Brew',
+            // Center and ClipOval to make the map circular
+            Center(
+              child: ClipOval(
+                child: Container(
+                  height: MediaQuery.of(context).size.width * 0.9, // 80% of screen width
+                  width: MediaQuery.of(context).size.width * 0.9, // Ensure square for circle
+                  child: GoogleMap(
+                    initialCameraPosition: CameraPosition(
+                      target: storeLocation,
+                      zoom: 17.0,
                     ),
+                    markers: {
+                      Marker(
+                        markerId: const MarkerId('storeMarker'),
+                        position: storeLocation,
+                        infoWindow: const InfoWindow(
+                          title: 'Eagles Brew',
+                        ),
+                      ),
+                    },
                   ),
-                },
+                ),
               ),
             ),
             const SizedBox(height: 16.0),
