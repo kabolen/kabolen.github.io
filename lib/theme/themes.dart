@@ -35,6 +35,14 @@ ThemeData lightTheme = ThemeData(
 
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
+  scaffoldBackgroundColor: Color(0xFF262626), // softer dark gray
+  canvasColor: Color(0xFF1E1E1E),
+  colorScheme: const ColorScheme.dark(
+    primary: Color.fromARGB(255, 255, 153, 7),
+    background: Color(0xFF1E1E1E),
+    surface: Color(0xFF2A2A2A),
+  ),
+  // ... keep your existing theme configs
   switchTheme: SwitchThemeData(
     thumbColor:
         MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
