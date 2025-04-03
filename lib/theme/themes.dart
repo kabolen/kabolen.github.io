@@ -1,13 +1,11 @@
-/****************************************************************************************************
- *
- * @file:    themes.dart
- * @author:  Nolan Olhausen
- * @date: 2024-11-15
- *
- * @brief:
- *      This file contains the light and dark themes for the application.
- * 
- ****************************************************************************************************/
+/// @file:    themes.dart
+/// @author:  Nolan Olhausen
+/// @author:  Kade Bolen
+/// @date: 2024-11-15
+///
+/// @brief:
+///      This file contains the light and dark themes for the application.
+library;
 
 import 'package:flutter/material.dart';
 
@@ -35,19 +33,18 @@ ThemeData lightTheme = ThemeData(
 
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
-  scaffoldBackgroundColor: Color(0xFF262626), // softer dark gray
-  canvasColor: Color(0xFF1E1E1E),
+  scaffoldBackgroundColor: const Color(0xFF2B2B2B), // Jet — it complements warm tones nicely
+  canvasColor: const Color(0xFF1E1E1E),
   colorScheme: const ColorScheme.dark(
     primary: Color.fromARGB(255, 255, 153, 7),
-    background: Color(0xFF1E1E1E),
     surface: Color(0xFF2A2A2A),
   ),
   // ... keep your existing theme configs
   switchTheme: SwitchThemeData(
     thumbColor:
-        MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
-        return const Color.fromARGB(255, 130, 77, 4).withOpacity(.48);
+        WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
+        return const Color.fromARGB(255, 130, 77, 4).withValues(alpha: 0.48);
       }
       return const Color.fromARGB(255, 255, 153, 7);
     }),
