@@ -43,7 +43,7 @@ ThemeData darkTheme = ThemeData(
     thumbColor:
         WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
       if (states.contains(WidgetState.selected)) {
-        return const Color.fromARGB(255, 130, 77, 4).withValues(alpha: 0.48);
+        return const Color.fromARGB(122, 130, 77, 4);//.withValues(alpha: 0.48);
       }
       return const Color.fromARGB(255, 255, 153, 7);
     }),
