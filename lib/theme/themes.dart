@@ -1,6 +1,5 @@
 /// @file:    themes.dart
-/// @author:  Nolan Olhausen
-/// @author:  Kade Bolen
+/// @author:  Nolan Olhausen, Kade Bolen
 /// @date: 2024-11-15
 ///
 /// @brief:
