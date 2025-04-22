@@ -413,6 +413,7 @@ class _ProductPageState extends State<ProductPage> {
                 style: GoogleFonts.poppins(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
+                  color: Colors.white,
                 ),
               ),
               backgroundColor: const Color.fromARGB(255, 255, 153, 7),
