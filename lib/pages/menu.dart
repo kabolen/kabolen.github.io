@@ -210,7 +210,7 @@ class _MenuPageState extends State<MenuPage> {
                               children: categoryProducts
                                   .map((product) => ProductCard(
                                         product: product,
-                                        cart: widget.cart,
+                                        cart: widget.cart, applePayEnabled: widget.applePayEnabled, googlePayEnabled: widget.googlePayEnabled, account: widget.account,
                                       ))
                                   .toList(),
                             ),

@@ -126,6 +126,8 @@ class _SignupPageState extends State<SignupPage> {
                               programs: widget.programs,
                               account: user,
                               cart: [],
+                              applePayEnabled: widget.applePayEnabled,
+                              googlePayEnabled: widget.googlePayEnabled,
                             ),
                           ),
                         ),

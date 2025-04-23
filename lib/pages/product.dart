@@ -18,8 +18,12 @@ import '../utility/squareAPI.dart';
 class ProductPage extends StatefulWidget {
   final Item product;
   List<CartItem> cart;
+  final bool applePayEnabled;
+  final bool googlePayEnabled;
+  final LoyaltyAccount? account;
 
-  ProductPage({required this.cart, required this.product, super.key});
+  ProductPage({required this.cart, required this.product, super.key, 
+    required this.applePayEnabled, required this.googlePayEnabled, required this.account});
 
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -168,6 +172,29 @@ class _ProductPageState extends State<ProductPage> {
             fontWeight: FontWeight.w900,
           ),
         ),
+        actions: [
+          IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CartPage(
+                          account: widget.account,
+                          products: widget.cart,
+                          applePayEnabled: widget.applePayEnabled,
+                          googlePayEnabled: widget.googlePayEnabled,
+                        ),
+                      ),
+                    );
+                  },
+                  icon: SvgPicture.asset(
+                    'assets/icons/cart.svg',
+                    height: 36,
+                    width: 36,
+                    color: const Color.fromARGB(255, 255, 153, 7),
+                  ),
+                ),
+        ]
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

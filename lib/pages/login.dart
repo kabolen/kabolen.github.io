@@ -96,6 +96,8 @@ class _LoginPageState extends State<LoginPage> {
                               programs: widget.programs,
                               account: user,
                               cart: [],
+                              applePayEnabled: widget.applePayEnabled,
+                              googlePayEnabled: widget.googlePayEnabled,
                             ),
                           ),
                         ),

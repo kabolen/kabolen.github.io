@@ -127,6 +127,8 @@ class OnboardingPage extends StatelessWidget {
                             programs: programs,
                             account: null,
                             cart: [],
+                            applePayEnabled: applePayEnabled,
+                            googlePayEnabled: googlePayEnabled,
                           ),
                         ),
                       ),

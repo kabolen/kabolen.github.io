@@ -107,10 +107,9 @@ class _MyAppState extends State<MyApp> {
     try {
       final fetchedProducts = await SquareAPI()
           .fetchOnlineAvailabeAndRelated(); // Fetch products from API
-          print(fetchedProducts);
+      print(fetchedProducts);
       setState(() {
         products = fetchedProducts; // Set products
-        
       });
     } catch (e) {
       setState(() {
@@ -285,12 +284,16 @@ class MyHomePage extends StatefulWidget {
   List<CartItem> cart; // List of cart items
   final List<RewardProgram> programs; // List of reward programs
   final LoyaltyAccount? account; // Loyalty account
+  final bool applePayEnabled; // Apple Pay enabled state
+  final bool googlePayEnabled; // Google Pay enabled state
   MyHomePage(
       {super.key,
       required this.cart,
       required this.products,
       required this.programs,
-      required this.account});
+      required this.account,
+      required this.applePayEnabled,
+      required this.googlePayEnabled});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -432,6 +435,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     return ProductCard(
                       product: product,
                       cart: widget.cart,
+                      applePayEnabled: widget.applePayEnabled,
+                      googlePayEnabled: widget.googlePayEnabled,
+                      account: widget.account,
                     ); // Product card
                   },
                 ),
@@ -480,10 +486,13 @@ class _MainScaffoldState extends State<MainScaffold> {
     switch (scaffoldIndex) {
       case 0:
         child = MyHomePage(
-            products: widget.products,
-            programs: widget.programs,
-            account: widget.account,
-            cart: widget.cart); // Home page
+          products: widget.products,
+          programs: widget.programs,
+          account: widget.account,
+          cart: widget.cart,
+          applePayEnabled: widget.applePayEnabled,
+          googlePayEnabled: widget.googlePayEnabled,
+        ); // Home page
         break;
       case 1:
         child = RewardsPage(
@@ -518,10 +527,13 @@ class _MainScaffoldState extends State<MainScaffold> {
         break;
       default:
         child = MyHomePage(
-            products: widget.products,
-            programs: widget.programs,
-            account: widget.account,
-            cart: widget.cart); // Default to home page
+          products: widget.products,
+          programs: widget.programs,
+          account: widget.account,
+          cart: widget.cart,
+          applePayEnabled: widget.applePayEnabled,
+          googlePayEnabled: widget.googlePayEnabled,
+        ); // Default to home page
     }
     return Scaffold(
       body: child,

@@ -19,12 +19,18 @@ import 'package:intl/intl.dart';
 class ProductCard extends StatelessWidget {
   final Item product; // product to display
   List<CartItem> cart; // cart for passing between pages
+  final bool applePayEnabled;
+  final bool googlePayEnabled;
+  final LoyaltyAccount? account;
 
   // constructor
   ProductCard({
     super.key,
     required this.product,
     required this.cart,
+    required this.applePayEnabled,
+    required this.googlePayEnabled,
+    required this.account,
   });
 
   @override
@@ -37,7 +43,7 @@ class ProductCard extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => ProductPage(
               product: product,
-              cart: cart,
+              cart: cart, applePayEnabled: applePayEnabled, googlePayEnabled: googlePayEnabled, account: account, 
             ),
           ),
         );
