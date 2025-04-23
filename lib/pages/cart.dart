@@ -283,11 +283,17 @@ class _CartPageState extends State<CartPage> {
                           label: Text(tip),
                           selected: selectedTip == tip,
                           onSelected: (_) {
-                            if (tip == 'Custom') {
-                              _updateTipAmount('Custom');
-                            } else {
-                              _updateTipAmount(tip);
-                            }
+                            setState(() {
+                              selectedTip = tip;
+                              if (tip != 'Custom') {
+                                _updateTipAmount(tip);
+                                FocusScope.of(context)
+                                    .unfocus(); // hide keyboard if open
+                              } else {
+                                FocusScope.of(context)
+                                    .requestFocus(customTipFocusNode);
+                              }
+                            });
                           },
                         );
                       }).toList(),
@@ -296,32 +302,29 @@ class _CartPageState extends State<CartPage> {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              'Custom Tip .... \$',
+                              'Custom Tip: \$',
                               style: GoogleFonts.poppins(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                             SizedBox(
-                              width: 80,
+                              width: 100,
                               child: TextField(
-                                style: GoogleFonts.poppins(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                ),
                                 controller: customTipController,
                                 focusNode: customTipFocusNode,
                                 keyboardType:
                                     const TextInputType.numberWithOptions(
                                         decimal: true),
-                                textInputAction: TextInputAction.done,
-                                onSubmitted: (_) {
-                                  // Dismiss the keyboard when done
-                                  FocusScope.of(context)
-                                      .requestFocus(FocusNode());
-                                },
+                                decoration: const InputDecoration(
+                                  isDense: true,
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 8.0),
+                                  border: OutlineInputBorder(),
+                                ),
                                 onChanged: (value) {
                                   setState(() {
                                     tipAmount = double.tryParse(value) ?? 0.0;
