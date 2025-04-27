@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 function Header() {
     return (
         <header>
-            <h1>Your Name</h1>
+            <h1>Kade Bolen</h1>
             <nav>
                 <Link to="/">Home</Link>
                 <Link to="/projects">Projects</Link>
