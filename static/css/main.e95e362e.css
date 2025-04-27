@@ -1,0 +1,2 @@
+body,html{font-family:Arial,sans-serif;height:100%;margin:0;padding:0;text-align:center}#root{display:flex;flex-direction:column;min-height:100vh}header{background-color:#4caf50;color:#fff;padding:2rem 0}nav a{color:#fff;margin:0 1rem;text-decoration:none}nav a:hover{text-decoration:underline}main{flex:1 1}footer{background-color:#222;bottom:0;color:#fff;padding:1rem 0;position:relative;width:100%}.project-card{background:#f9f9f9;border-radius:8px;box-shadow:0 2px 5px #0000001a;margin:1rem auto;max-width:600px;padding:1rem}
+/*# sourceMappingURL=main.e95e362e.css.map*/
