@@ -9,7 +9,7 @@ import NotFound from './pages/NotFound';
 
 function App() {
     return (
-        <Router>
+        <>
             <Header />
             <main>
                 <Routes>
@@ -21,7 +21,7 @@ function App() {
                 </Routes>
             </main>
             <Footer />
-        </Router>
+        </>
     );
 }
 
