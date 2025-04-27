@@ -1,4 +1,6 @@
-const projects = [
+import {Project} from './projects.d.ts';
+
+const projects: Project[] = [
     {
         id: 1,
         title: "Domino ML Train Finder",

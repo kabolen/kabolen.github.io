@@ -1,8 +1,15 @@
 import {Link} from "react-router-dom";
+import {motion} from "framer-motion";
 
 function NotFound() {
     return (
-        <section style={{textAlign: "center", padding: '2rem'}}>
+        <motion.section
+            style={{textAlign: "center", padding: '2rem'}}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{opacity: 1, scale: 1}}
+            exit={{opacity: 0, scale: 0.95}}
+            transition={{duration: 0.5}}
+        >
             <h1 style={{fontSize: '4rem', marginBottom: '1rem'}}>404</h1>
             <p style={{fontSize: '1.5rem'}}>Whoops! The page you're looking for is not real.</p>
             <Link to={"/"} style={{
@@ -17,7 +24,7 @@ function NotFound() {
             }}>
                 Back to Home
             </Link>
-        </section>
+        </motion.section>
     );
 }
 
