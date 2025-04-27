@@ -9,7 +9,7 @@ import NotFound from './pages/NotFound';
 
 function App() {
     return (
-        <Router basename={"/kabolen.github.io"}>
+        <Router>
             <Header />
             <main>
                 <Routes>
