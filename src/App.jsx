@@ -7,6 +7,7 @@ import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 import {Route, Routes, useLocation} from "react-router-dom";
 import { AnimatePresence} from "framer-motion";
+import ProjectPage from "./pages/ProjectPage";
 
 function AnimatedRoutes() {
     const location = useLocation();
@@ -15,6 +16,7 @@ function AnimatedRoutes() {
             <Routes location={location} key={location.pathname}>
                 <Route path="/" element={<Home />} />
                 <Route path="/projects" element={<Projects />} />
+                <Route path="/projects/:slug" element={<ProjectPage />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="*" element={<NotFound />} />
