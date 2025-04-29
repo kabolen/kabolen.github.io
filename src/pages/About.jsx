@@ -8,7 +8,7 @@ function About() {
         exit={{opacity: 0, scale: 0.95}}
         transition={{duration: 0.5}}
         >
-            <h2>About Me</h2>
+            <h1>About Me</h1>
             <p>Nothing Here!</p> //TODO
         </motion.section>
     );
