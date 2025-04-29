@@ -1,7 +1,7 @@
 function Footer() {
     return (
         <footer>
-            <p>&copy; {new Date().getFullYear()} Kade Bolen. All rights reserved.</p>
+            <h5>&copy; {new Date().getFullYear()} Kade Bolen. All rights reserved.</h5>
         </footer>
     );
 }
