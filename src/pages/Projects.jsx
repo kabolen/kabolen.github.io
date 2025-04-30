@@ -25,10 +25,12 @@ function Projects() {
             animate="animate"
             exit="exit"
         >
-            <h2>Project Archive</h2>
+            <motion.div>
+                <h1>Project Archive</h1>
+            </motion.div>
             {projects.map(project => (
                 <motion.div key={project.id} variants={cardVariants}>
-                <ProjectCard key={project.id} {...project} />
+                <ProjectCard {...project} />
                 </motion.div>
             ))}
         </motion.div>
