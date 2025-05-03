@@ -1,12 +1,13 @@
 import React from 'react';
-import Hero from '../components/Hero';
+import Header from "../components/Header";
 
 function Home() {
     return (
             <section className="home-content">
+                <Header/>
                 <div className="intro-box">
                     <div className="hero-box">
-                        <h1 align={"center"}>Kade Bolen Portfolio</h1>
+                        <ph>Kade Bolen Portfolio</ph>
                     </div>
                     <hr className="divider" />
                     <p>
