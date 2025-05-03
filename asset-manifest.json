@@ -1,13 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.5e66ef59.css",
-    "main.js": "/static/js/main.6a0a1f6d.js",
+    "main.css": "/static/css/main.b0ec3d90.css",
+    "main.js": "/static/js/main.3896dfd3.js",
+    "static/media/MonaspaceNeon-Bold.otf": "/static/media/MonaspaceNeon-Bold.59ba78351f22bfe7797b.otf",
+    "static/media/MonaspaceKrypton-Bold.otf": "/static/media/MonaspaceKrypton-Bold.9334a9a4e9ff66ab5533.otf",
+    "static/media/MonaspaceKrypton-Medium.otf": "/static/media/MonaspaceKrypton-Medium.6a3c4759bfdec066f164.otf",
+    "static/media/MonaspaceKrypton-ExtraLight.otf": "/static/media/MonaspaceKrypton-ExtraLight.998b925f13dbf502ab92.otf",
     "index.html": "/index.html",
-    "main.5e66ef59.css.map": "/static/css/main.5e66ef59.css.map",
-    "main.6a0a1f6d.js.map": "/static/js/main.6a0a1f6d.js.map"
+    "main.b0ec3d90.css.map": "/static/css/main.b0ec3d90.css.map",
+    "main.3896dfd3.js.map": "/static/js/main.3896dfd3.js.map"
   },
   "entrypoints": [
-    "static/css/main.5e66ef59.css",
-    "static/js/main.6a0a1f6d.js"
+    "static/css/main.b0ec3d90.css",
+    "static/js/main.3896dfd3.js"
   ]
 }
