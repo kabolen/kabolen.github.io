@@ -22,8 +22,13 @@ class ProductPage extends StatefulWidget {
   final bool googlePayEnabled;
   final LoyaltyAccount? account;
 
-  ProductPage({required this.cart, required this.product, super.key, 
-    required this.applePayEnabled, required this.googlePayEnabled, required this.account});
+  ProductPage(
+      {required this.cart,
+      required this.product,
+      super.key,
+      required this.applePayEnabled,
+      required this.googlePayEnabled,
+      required this.account});
 
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -164,38 +169,37 @@ class _ProductPageState extends State<ProductPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          item.name,
-          style: GoogleFonts.poppins(
-            color: const Color.fromARGB(255, 255, 153, 7),
-            fontSize: 16,
-            fontWeight: FontWeight.w900,
+          title: Text(
+            item.name,
+            style: GoogleFonts.poppins(
+              color: const Color.fromARGB(255, 255, 153, 7),
+              fontSize: 16,
+              fontWeight: FontWeight.w900,
+            ),
           ),
-        ),
-        actions: [
-          IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CartPage(
-                          account: widget.account,
-                          products: widget.cart,
-                          applePayEnabled: widget.applePayEnabled,
-                          googlePayEnabled: widget.googlePayEnabled,
-                        ),
-                      ),
-                    );
-                  },
-                  icon: SvgPicture.asset(
-                    'assets/icons/cart.svg',
-                    height: 36,
-                    width: 36,
-                    color: const Color.fromARGB(255, 255, 153, 7),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartPage(
+                      account: widget.account,
+                      products: widget.cart,
+                      applePayEnabled: widget.applePayEnabled,
+                      googlePayEnabled: widget.googlePayEnabled,
+                    ),
                   ),
-                ),
-        ]
-      ),
+                );
+              },
+              icon: SvgPicture.asset(
+                'assets/icons/cart.svg',
+                height: 36,
+                width: 36,
+                color: const Color.fromARGB(255, 255, 153, 7),
+              ),
+            ),
+          ]),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,

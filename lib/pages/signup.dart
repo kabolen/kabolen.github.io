@@ -56,7 +56,8 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>(); // Form key for validation
-  final TextEditingController _phoneController = TextEditingController(); // Controller for phone number input
+  final TextEditingController _phoneController =
+      TextEditingController(); // Controller for phone number input
 
   @override
   Widget build(BuildContext context) {

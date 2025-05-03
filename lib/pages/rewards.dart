@@ -24,10 +24,12 @@ class RewardsPage extends StatelessWidget {
   });
 
   String getRewardDescription(RewardTier reward) {
-    if (reward.discountType == 'FIXED_AMOUNT' && reward.fixedDiscountMoney != null) {
+    if (reward.discountType == 'FIXED_AMOUNT' &&
+        reward.fixedDiscountMoney != null) {
       final dollars = reward.fixedDiscountMoney! / 100;
       return '\$${dollars.toStringAsFixed(2)} off';
-    } else if (reward.discountType == 'FIXED_PERCENTAGE' && reward.percentageDiscount != null) {
+    } else if (reward.discountType == 'FIXED_PERCENTAGE' &&
+        reward.percentageDiscount != null) {
       return '${reward.percentageDiscount}% off';
     }
     return 'Reward details';
@@ -108,7 +110,7 @@ class RewardsPage extends StatelessWidget {
               children: [
                 Padding(
                   padding:
-                  const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                   child: Text(
                     "Redeemable At Checkout",
                     style: GoogleFonts.poppins(
@@ -164,8 +166,8 @@ class RewardsPage extends StatelessWidget {
                         ),
                         onTap: canRedeem
                             ? () {
-                          // Handle redemption
-                        }
+                                // Handle redemption
+                              }
                             : null,
                       ),
                     );

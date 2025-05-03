@@ -43,7 +43,10 @@ class ProductCard extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => ProductPage(
               product: product,
-              cart: cart, applePayEnabled: applePayEnabled, googlePayEnabled: googlePayEnabled, account: account, 
+              cart: cart,
+              applePayEnabled: applePayEnabled,
+              googlePayEnabled: googlePayEnabled,
+              account: account,
             ),
           ),
         );

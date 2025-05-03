@@ -15,8 +15,7 @@ ThemeData lightTheme = ThemeData(
   ),
   inputDecorationTheme: InputDecorationTheme(
     focusedBorder: OutlineInputBorder(
-      borderSide: const BorderSide(
-          color: Color.fromARGB(255, 255, 153, 7)),
+      borderSide: const BorderSide(color: Color.fromARGB(255, 255, 153, 7)),
       borderRadius: BorderRadius.circular(8.0),
     ),
     floatingLabelStyle:
@@ -32,7 +31,8 @@ ThemeData lightTheme = ThemeData(
 
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
-  scaffoldBackgroundColor: const Color(0xFF2B2B2B), // Jet — it complements warm tones nicely
+  scaffoldBackgroundColor:
+      const Color(0xFF2B2B2B), // Jet — it complements warm tones nicely
   canvasColor: const Color(0xFF1E1E1E),
   colorScheme: const ColorScheme.dark(
     primary: Color.fromARGB(255, 255, 153, 7),
@@ -43,7 +43,8 @@ ThemeData darkTheme = ThemeData(
     thumbColor:
         WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
       if (states.contains(WidgetState.selected)) {
-        return const Color.fromARGB(122, 130, 77, 4);//.withValues(alpha: 0.48);
+        return const Color.fromARGB(
+            122, 130, 77, 4); //.withValues(alpha: 0.48);
       }
       return const Color.fromARGB(255, 255, 153, 7);
     }),
@@ -53,8 +54,7 @@ ThemeData darkTheme = ThemeData(
   ),
   inputDecorationTheme: InputDecorationTheme(
     focusedBorder: OutlineInputBorder(
-      borderSide: const BorderSide(
-          color: Color.fromARGB(255, 255, 153, 7)),
+      borderSide: const BorderSide(color: Color.fromARGB(255, 255, 153, 7)),
       borderRadius: BorderRadius.circular(8.0),
     ),
     floatingLabelStyle:

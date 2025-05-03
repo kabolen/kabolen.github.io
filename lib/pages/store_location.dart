@@ -65,8 +65,10 @@ class LocationPage extends StatelessWidget {
             Center(
               child: ClipOval(
                 child: Container(
-                  height: MediaQuery.of(context).size.width * 0.9, // 80% of screen width
-                  width: MediaQuery.of(context).size.width * 0.9, // Ensure square for circle
+                  height: MediaQuery.of(context).size.width *
+                      0.9, // 80% of screen width
+                  width: MediaQuery.of(context).size.width *
+                      0.9, // Ensure square for circle
                   child: GoogleMap(
                     initialCameraPosition: CameraPosition(
                       target: storeLocation,
