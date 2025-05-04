@@ -166,7 +166,7 @@ class RewardsPage extends StatelessWidget {
                         ),
                         onTap: canRedeem
                             ? () {
-                                // Handle redemption
+                                // TODO: Handle redemption
                               }
                             : null,
                       ),
