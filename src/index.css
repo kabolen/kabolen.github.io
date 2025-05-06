@@ -110,17 +110,13 @@ a {
 }
 
 .color-cycle {
-    animation: colorCycle 5s infinite linear;
+    animation: colorCycle 5s infinite ease-in-out;
 }
 
 @keyframes colorCycle {
     0%   { border-color: var(--stroke-color); }
     25%  { border-color: var(--blue-color); }
     50%  { border-color: var(--stroke-color); }
-    75% { border-color: var(--purple-color); }
+    75% { border-color: var(--teal-color); }
     100% { border-color: var(--stroke-color); }
-}
-
-.color-cycle {
-    animation: colorCycle 5s infinite ease-in-out;
 }
