@@ -1,15 +1,21 @@
 import React from 'react';
 import Header from "../components/Header";
+import Hero from "../components/Hero";
+import Divider from "../components/Divider";
 
 function Home() {
     return (
             <section className="home-content">
                 <Header/>
                 <div className="intro-box">
-                    <div className="hero-box">
-                        <ph>Kade Bolen Portfolio</ph>
-                    </div>
-                    <hr className="divider" />
+                    <Hero>
+                        <section>
+                            <h1 style={{textAlign: 'center', fontSize: '175%'}}>
+                                Kade Bolen Portfolio
+                            </h1>
+                        </section>
+                    </Hero>
+                    <Divider/>
                     <p>
                         Hello, I'm Kade Bolen and welcome to my portfolio website! This site serves as an online portfolio
                         where I keep information about myself and my projects. It exists as a simple way for anyone to
