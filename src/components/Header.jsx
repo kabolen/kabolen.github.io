@@ -1,6 +1,8 @@
 function Header() {
     return (
-        <div className='color-cycle' style={{width: '100%',
+        <div className='color-cycle' style={{
+            position: "center",
+            width: '100%',
             height: '2.8125rem',
             background: 'var(--accent-color)',
             border: '1px var(--stroke-color) solid',
