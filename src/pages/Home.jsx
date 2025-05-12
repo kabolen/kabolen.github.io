@@ -2,10 +2,13 @@ import React from 'react';
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Divider from "../components/Divider";
+import BorderDeco from "../components/BorderDeco";
+import CubeCanvas from "../components/CubeCanvas";
 
 function Home() {
     return (
-            <section className="home-content">
+            <section>
+                <CubeCanvas />
                 <Header/>
                 <div className="intro-box">
                     <Hero>
@@ -16,6 +19,7 @@ function Home() {
                         </section>
                     </Hero>
                     <Divider/>
+                    <BorderDeco/>
                     <p>
                         Hello, I'm Kade Bolen and welcome to my portfolio website! This site serves as an online portfolio
                         where I keep information about myself and my projects. It exists as a simple way for anyone to
