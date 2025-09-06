@@ -1,78 +1,24 @@
 :root {
-    --bg-color: #293135;
-    --body-color: #F4FFFC;
-    --accent-color: #323A3E;
-    --stroke-color: #656970;
-    --blue-color: #88C5DE;
-    --dim-blue-color: #5C758C;
-    --teal-color: #5AB6A1;
-    --purple-color: #AB98DE;
-    --yellow-color: #FCEE98;
-}
-
-/*Bold Font*/
-@font-face {
-    font-family: 'Monaspace Krypton Bold';
-    src: url('/public/fonts/MonaspaceKrypton-Bold.otf') format('opentype');
-    font-weight: 600;
-    font-style: normal;
+    --bg-color: #24273A;
+    --text-color: #CAD3F5;
+    --border-color: #6E738D;
+    --accent-border-color: #CBA6F7;
+    --accent-color: #363A4F;
 }
 
 @font-face {
-    font-family: 'Monaspace Neon Bold';
-    src: url('/public/fonts/MonaspaceNeon-Bold.otf') format('opentype');
-    font-weight: 600;
+    font-family: 'Monaspace';
+    src: url('../public/fonts/MonaspaceKrypton-Regular.otf') format('opentype');
+    font-weight: normal;
     font-style: normal;
 }
 
-/*Regular Font*/
-@font-face {
-    font-family: 'Monaspace Krypton Regular';
-    src: url('/public/fonts/MonaspaceKrypton-Medium.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-}
-
-/*Light Font*/
-@font-face {
-    font-family: 'Monaspace Krypton Light';
-    src: url('/public/fonts/MonaspaceKrypton-ExtraLight.otf') format('opentype');
-    font-weight: 200;
-    font-style: normal;
-}
-
-html, body {
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Monaspace', monospace;
     margin: 0;
     padding: 0;
-    background-color: var(--bg-color);
-    color: var(--body-color);
-    height: 100%;
-    width: 100%;
-    line-height: normal;
-    font-size: 1rem;
-    letter-spacing: 0.14063rem;
-}
-
-ph {
-    font-family: 'Monaspace Neon', monospace;
-    font-weight: 600;
-    font-size: 200%;
-    letter-spacing: 0.3375rem;
-    white-space: nowrap;
-    text-align: center;
-    width: 100%;
-}
-
-h1 {
-    font-family: 'Monaspace Neon', monospace;
-    font-weight: 600;
-    letter-spacing: 0.3375rem;
-}
-
-p {
-    font-family: 'Monaspace Krypton Light', monospace;
-    width: inherit;
-    line-height: 1.6rem;
 }
 
 a {
@@ -80,23 +26,9 @@ a {
     text-decoration: none;
 }
 
-.intro-box {
-    flex-direction: column;
+.main-content {
+    padding: 2rem;
     display: flex;
-    padding: 0 20% 20%;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    gap: 0.625rem;
-}
-
-.color-cycle {
-    animation: colorCycle 5s infinite ease-in-out;
-}
-
-@keyframes colorCycle {
-    0%   { border-color: var(--stroke-color); }
-    25%  { border-color: var(--blue-color); }
-    50%  { border-color: var(--stroke-color); }
-    75% { border-color: var(--teal-color); }
-    100% { border-color: var(--stroke-color); }
 }
