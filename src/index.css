@@ -1,9 +1,11 @@
 :root {
-    --bg-color: #24273A;
-    --text-color: #CAD3F5;
-    --border-color: #6E738D;
-    --accent-border-color: #CBA6F7;
-    --accent-color: #363A4F;
+    --bg-color: #24273A; /* Base */
+    --text-color: #CAD3F5; /* Text */
+    --bright-text-color: #8aadf4; /* Pink */
+    --border-color: #6E738D; /* Overlay 0 */
+    --accent-border-color: #C6A0F7; /* Mauve */
+    --bright-border-color: #939ab7;
+    --accent-color: #363A4F; /* Surface 0 */
 }
 
 @font-face {
@@ -24,6 +26,10 @@ body {
 a {
     color: inherit;
     text-decoration: none;
+}
+
+h1 {
+    color: var(--bright-text-color);
 }
 
 .main-content {
