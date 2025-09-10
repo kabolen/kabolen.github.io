@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import ProjectCard from '../components/ProjectCard';
 import './Projects.css';
+import projectsData from '../projects.json';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -23,32 +24,8 @@ const cardVariants = {
 };
 
 function Projects() {
-    const projects = [
-        {
-            title: "Accessible Makeup Brushes",
-            description: "An accessible design for makeup tools created for those with little or no motor function in their hands and wrists.",
-            tools: "Shapr3D, Fusion360, 3D Printing, Laser Cutting",
-            githubLink: "#",
-            archiveLink: "/projects/makeup-brushes"
-        },
-        {
-            title: "Custom Walker Tray",
-            description: "",
-            tools: "IDE, Software, Fabrication, etc.",
-            githubLink: "#",
-            archiveLink: "#"
-        },
-        {
-            title: "Project",
-            description: "A short description about the project. More details will be included in it's page.",
-            tools: "IDE, Software, Fabrication, etc.",
-            githubLink: "#",
-            archiveLink: "#"
-        }
-    ];
-
     // Sort projects alphabetically by title
-    const sortedProjects = [...projects].sort((a, b) => a.title.localeCompare(b.title));
+    const sortedProjects = [...projectsData].sort((a, b) => a.title.localeCompare(b.title));
 
     return (
         <div>
