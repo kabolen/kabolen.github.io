@@ -1,10 +1,10 @@
 :root {
     --bg-color: #24273A; /* Base */
     --text-color: #CAD3F5; /* Text */
-    --bright-text-color: #8aadf4; /* Pink */
+    --bright-text-color: #8aadf4; /* Blue */
     --border-color: #6E738D; /* Overlay 0 */
     --accent-border-color: #C6A0F7; /* Mauve */
-    --bright-border-color: #939ab7;
+    --bright-border-color: #939ab7; /* Overlay 2 */
     --accent-color: #363A4F; /* Surface 0 */
 }
 
