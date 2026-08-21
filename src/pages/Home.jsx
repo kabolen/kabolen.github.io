@@ -1,39 +1,43 @@
-import React from 'react';
-import Header from "../components/Header";
-import './Home.css';
+import { Link } from 'react-router-dom'
+import { profile } from '../data/profile.js'
 
-function Home() {
-    return (
-        <div>
-            <Header />
-            <div className="main-content">
-                <div className="title-container">
-                    <h1>Kade Bolen Portfolio</h1>
-                </div>
-                <div className="text-container">
-                    <p>
-                        Hello, I'm Kade Bolen and welcome to my portfolio website! This site serves as an online portfolio
-                        where I keep information about myself and my projects. It exists as a simple way for anyone to
-                        learn about what kind of person I am and what kind of things I put my time and energy into.
-                    </p>
-                    <p>
-                        I have been storing images and other files across multiple platforms since taking on larger
-                        projects, and I recently realized that this is not a sustainable way to manage my own history. So,
-                        as a secondary purpose, I am using this webpage as my own personal archive for each and every
-                        project I've been a part of. As a student studying Computer Science as well as someone who enjoys
-                        learning more about it, I approached this situation as a challenge to create my own website from
-                        scratch rather than simply compiling my documentation into a google drive or similar.
-                    </p>
-                    <p>
-                        This website is divided into four different pages, one of them being the home page which you're in
-                        right now. The other three are the "Projects", "About Me", and "Contacts" page which can be
-                        accessed via the navigation bar at the top of the page. The nav bar will persist across each page
-                        to enable simple moves to and from any page.
-                    </p>
-                </div>
-            </div>
-        </div>
-    );
+const index = [
+  { to: '/work', label: 'work', desc: 'Selected projects, most recent first' },
+  { to: '/about', label: 'about', desc: 'Background and how I work' },
+  { to: '/resume', label: 'resume', desc: 'Experience, education, skills' },
+  { to: '/notes', label: 'notes', desc: 'Occasional writing' },
+  { to: '/contact', label: 'contact', desc: 'Get in touch' },
+]
+
+export default function Home() {
+  return (
+    <div className="max-w-5xl mx-auto px-6 sm:px-10">
+      <section className="pt-20 sm:pt-28 pb-16 sm:pb-20 max-w-2xl">
+        <p className="font-mono text-xs text-accent tracking-wide uppercase mb-5">{profile.role}</p>
+        <h1 className="font-display font-medium text-[2.75rem] sm:text-6xl leading-[1.05] tracking-tight text-ink">
+          {profile.name}
+        </h1>
+        <p className="mt-6 text-lg text-muted leading-relaxed max-w-xl">
+          {profile.tagline}
+        </p>
+      </section>
+
+      <section className="border-t border-line" aria-label="Site index">
+        {index.map((item) => (
+          <Link
+            key={item.to}
+            to={item.to}
+            className="group flex items-baseline justify-between gap-6 py-5 border-b border-line hover:bg-accent-soft/40 -mx-6 px-6 sm:-mx-10 sm:px-10 transition-colors"
+          >
+            <span className="font-mono text-base sm:text-lg text-ink group-hover:text-accent transition-colors">
+              {item.label}/
+            </span>
+            <span className="hidden sm:block font-body text-sm text-muted text-right">
+              {item.desc}
+            </span>
+          </Link>
+        ))}
+      </section>
+    </div>
+  )
 }
-
-export default Home;
