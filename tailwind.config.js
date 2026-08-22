@@ -4,12 +4,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        paper: '#FAFAF8',
-        ink: '#1B1D1F',
-        muted: '#6B6F76',
-        accent: '#442f5d',
-        'accent-soft': '#ebe8ee',
-        line: '#E4E4E1',
+        paper: 'rgb(var(--color-paper) / <alpha-value>)',
+        ink: 'rgb(var(--color-ink) / <alpha-value>)',
+        muted: 'rgb(var(--color-muted) / <alpha-value>)',
+        accent: 'rgb(var(--color-accent) / <alpha-value>)',
+        'accent-soft': 'rgb(var(--color-accent-soft) / <alpha-value>)',
+        line: 'rgb(var(--color-line) / <alpha-value>)',
       },
       fontFamily: {
         display: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
