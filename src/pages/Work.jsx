@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { projects } from '../data/projects.js'
 
 export default function Work() {
@@ -13,7 +14,11 @@ export default function Work() {
         {projects.map((p) => (
           <article key={p.slug} className="bg-paper p-7 flex flex-col">
             <div className="flex items-baseline justify-between gap-4 mb-3">
-              <h2 className="font-display text-xl text-ink">{p.title}</h2>
+              <h2 className="font-display text-xl text-ink">
+                <Link to={`/work/${p.slug}`} className="hover:text-accent transition-colors">
+                  {p.title}
+                </Link>
+              </h2>
               <span className="font-mono text-xs text-muted shrink-0">{p.year}</span>
             </div>
             <p className="font-mono text-xs text-accent mb-3">{p.role}</p>
@@ -25,16 +30,21 @@ export default function Work() {
                 </span>
               ))}
             </div>
-            {p.url && (
-              <a
-                href={p.url}
-                target="_blank"
-                rel="noreferrer"
-                className="font-mono text-xs text-accent mt-5 hover:underline"
-              >
-                View →
-              </a>
-            )}
+            <div className="flex items-center gap-4 mt-5">
+              <Link to={`/work/${p.slug}`} className="font-mono text-xs text-accent hover:underline">
+                Read more →
+              </Link>
+              {p.url && (
+                <a
+                  href={p.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-mono text-xs text-muted hover:text-accent transition-colors"
+                >
+                  Live site ↗
+                </a>
+              )}
+            </div>
           </article>
         ))}
       </div>

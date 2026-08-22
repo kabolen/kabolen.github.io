@@ -27,3 +27,14 @@ Content of the post lives here.
 ```
 
 It'll appear on the Notes page automatically, newest first.
+
+### Project write-up template
+
+Each entry in `src/data/projects.js` has a `slug`. To give that project a
+detailed page (linked from the Work page as "Read more"), create
+`src/content/projects/<slug>.md` containing the write-up in plain markdown —
+no frontmatter needed. Images go in `public/projects/<slug>/` and are
+referenced with an absolute path, e.g. `![alt](/projects/<slug>/image.png)`.
+
+If no matching file exists for a project's slug, its page just shows
+"Detailed write-up coming soon."
