@@ -21,7 +21,7 @@ export default function Resume() {
 
       <div className="max-w-prose">
         <section className="mb-16">
-          <h2 className="font-mono text-xs text-muted tracking-wide uppercase mb-6">Experience</h2>
+          <h2 className="font-mono text-xs text-muted tracking-wide uppercase mb-4">Job History</h2>
           <div className="space-y-10">
             {experience.map((job) => (
               <div key={job.role + job.org}>
@@ -37,7 +37,7 @@ export default function Resume() {
         </section>
 
         <section className="mb-16">
-          <h2 className="font-mono text-xs text-muted tracking-wide uppercase mb-6">Education</h2>
+          <h2 className="font-mono text-xs text-muted tracking-wide uppercase mb-4">Education</h2>
           <div className="space-y-6">
             {education.map((ed) => (
               <div key={ed.school} className="flex items-baseline justify-between gap-4 flex-wrap">

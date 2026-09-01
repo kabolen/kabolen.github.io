@@ -7,7 +7,7 @@ export default function About() {
       <h1 className="font-display font-medium text-4xl sm:text-5xl text-ink mb-4">
         {profile.name}
       </h1>
-      <p className="font-mono text-sm text-muted mb-14">{profile.location}</p>
+      <p className="text-muted max-w-xl mb-14">{profile.location}</p>
 
       <div className="max-w-prose space-y-6">
         {profile.bio.map((para, i) => (

@@ -36,7 +36,7 @@ export const profile = {
       {
         school: 'Boise State University',
         credential: 'Bachelor, Computer Science',
-        period: '2021 - 2025',
+        period: 'August 2021 - December 2025',
       },
     ],
     skills: ['Java', 'C', 'Python', 'CAD Modeling', 'Troubleshooting'],
